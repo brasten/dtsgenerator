@@ -276,7 +276,11 @@ export default class DtsGenerator {
         }
         if (content.enum) {
             return ast.buildUnionTypeNode(content.enum, (value) => {
-                return this.generateLiteralTypeNode(content, value);
+                if (value == null) {
+                    return this.generateTypeName(schema, 'null', terminate);
+                } else {
+                    return this.generateLiteralTypeNode(content, value);
+                }
             }, terminate);
         } else if ('const' in content) {
             return this.generateLiteralTypeNode(content, content.const);
@@ -286,7 +290,10 @@ export default class DtsGenerator {
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private generateLiteralTypeNode(content: JsonSchemaObject, value: any): ts.LiteralTypeNode {
-        switch (content.type) {
+        const types = content.type;
+        const type = Array.isArray(types) ? types[0] : types;
+
+        switch (type) {
             case 'integer':
             case 'number':
                 return ast.buildNumericLiteralTypeNode('' + value);

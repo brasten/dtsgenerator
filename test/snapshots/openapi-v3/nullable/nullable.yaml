@@ -33,6 +33,18 @@ components:
             - type: string
             - type: boolean
           nullable: true
+
+    nullableEnum:
+      type: object
+      properties:
+        field:
+          type: string
+          nullable: true
+          enum:
+            - VALUE_ONE
+            - VALUE_TWO
+            - null
+
 paths:
   post:
     requestBody:
