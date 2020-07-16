@@ -12,5 +12,8 @@ declare namespace Components {
         export interface NullableAnyOf {
             field?: string | boolean | null;
         }
+        export interface NullableEnum {
+            field?: "VALUE_ONE" | "VALUE_TWO" | null;
+        }
     }
 }
